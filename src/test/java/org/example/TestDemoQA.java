@@ -8,8 +8,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class TestDemoQA {
     public static void main(String[] args) {
         WebDriver driver = new ChromeDriver();
-        driver.get("https://demoqa.com/");
-        driver.findElements(By.cssSelector(".top-card")).get(0).click();
-        //driver.quit();
+        driver.navigate().to("https://demoqa.com/");
+        driver.findElement(By.xpath("//h5[contains(text(), 'Elements')]")).click();
+        //driver.findElement(By.cssSelector("h5:contains('Elements')")).click();
+        driver.quit();
     }
 }
