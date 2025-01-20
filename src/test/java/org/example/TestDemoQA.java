@@ -9,7 +9,7 @@ public class TestDemoQA {
     public static void main(String[] args) {
         WebDriver driver = new ChromeDriver();
         driver.get("https://demoqa.com/");
-        //driver.findElement(By.cssSelector(".card-body > h5")).click();
-        //driver.quit();
+        driver.findElement(By.cssSelector("#app > div > div > div > div:nth-child(1) > div > div > div:nth-child(1) > span > div > div.header-right > div.icon > svg")).click();
+        driver.quit();
     }
 }
