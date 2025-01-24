@@ -25,6 +25,7 @@ class TestDemoQA {
     @Test
     public void textFieldTest() {
         driver.navigate().to(url);
+        driver.manage().window().maximize();
         WebElement tabElement = driver.findElement(By.xpath("//h5[contains(text(), 'Elements')]"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tabElement);
         tabElement.click();
@@ -40,6 +41,7 @@ class TestDemoQA {
     @Test
     public void checkBoxTest() {
         driver.navigate().to(url);
+        driver.manage().window().maximize();
         WebElement tab = driver.findElement(By.xpath("//h5[contains(text(), 'Elements')]"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tab);
         tab.click();
@@ -55,9 +57,26 @@ class TestDemoQA {
     @Test
     public void formTest() {
         driver.navigate().to(url);
+        driver.manage().window().maximize();
         WebElement tabForm = driver.findElement(By.xpath("//h5[contains(text(), 'Forms')]"));
-
-
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tabForm);
+        tabForm.click();
+        WebElement element = driver.findElement(By.xpath("//span[contains(text(), 'Practice Form')]"));
+        element.click();
+        WebElement inputName = driver.findElement(By.xpath("//input[@id='firstName']"));
+        inputName.sendKeys("Имя");
+        WebElement inputLastName = driver.findElement(By.xpath("//input[@id='lastName']"));
+        inputLastName.sendKeys("Фамилия");
+        WebElement selectGender = driver.findElement(By.xpath("//input[@id='gender-radio-2']"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", selectGender);
+        WebElement buttonSubmit = driver.findElement(By.xpath("//button[@id='submit']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", buttonSubmit);
+        buttonSubmit.click();
+        WebElement modalText = driver.findElement(By.xpath("//div[contains(text(), 'Thanks for submitting the form')]"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", modalText);
+        String modalExpectedText = "Thanks for submitting the form";
+        Assertions.assertEquals(modalExpectedText, modalText.getText().trim());
     }
 
     @AfterAll
