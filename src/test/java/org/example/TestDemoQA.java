@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 class TestDemoQA {
 
@@ -36,6 +38,10 @@ class TestDemoQA {
         inputField.sendKeys("Какое-то Имя");
         WebElement buttonSubmit = driver.findElement(By.xpath("//button[@id='submit']"));
         buttonSubmit.click();
+        String expectedField = "Name:Какое-то Имя";
+        WebElement textAfterSubmit = driver.findElement(By.xpath("//p[@id='name']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", textAfterSubmit);
+        assertEquals(expectedField, textAfterSubmit.getText());
     }
 
     @Test
@@ -47,11 +53,28 @@ class TestDemoQA {
         tab.click();
         WebElement element = driver.findElement(By.xpath("//span[contains(text(), 'Check Box')]"));
         element.click();
-        WebElement CheckBox = driver.findElement(By.xpath("//span[@class='rct-checkbox']"));
-        CheckBox.click();
+        WebElement checkBox = driver.findElement(By.xpath("//span[@class='rct-checkbox']"));
+        checkBox.click();
         String expectedText = "You have selected :";
         WebElement selectedTextElement = driver.findElement(By.xpath("//span[contains(text(), 'You have selected')]"));
-        Assertions.assertEquals(expectedText, selectedTextElement.getText().trim());
+        assertEquals(expectedText, selectedTextElement.getText().trim());
+    }
+
+    @Test
+    public void radioButtonTest() {
+        driver.navigate().to(url);
+        driver.manage().window().maximize();
+        WebElement tab = driver.findElement(By.xpath("//h5[contains(text(), 'Elements')]"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tab);
+        tab.click();
+        WebElement element = driver.findElement(By.xpath("//span[contains(text(), 'Radio Button')]"));
+        element.click();
+        WebElement radioButton = driver.findElement(By.xpath("//input[@id='yesRadio']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", radioButton);
+        radioButton.click();
+        String expectedText = "You have selected ";
+        WebElement resultText = driver.findElement(By.xpath("//span[@class='text-success']"));
+        Assertions.assertEquals(expectedText, resultText.getText());
     }
 
     @Test
@@ -76,7 +99,7 @@ class TestDemoQA {
         WebElement modalText = driver.findElement(By.xpath("//div[contains(text(), 'Thanks for submitting the form')]"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", modalText);
         String modalExpectedText = "Thanks for submitting the form";
-        Assertions.assertEquals(modalExpectedText, modalText.getText().trim());
+        assertEquals(modalExpectedText, modalText.getText().trim());
     }
 
     @AfterAll
