@@ -69,10 +69,10 @@ class TestDemoQA {
         tab.click();
         WebElement element = driver.findElement(By.xpath("//span[contains(text(), 'Radio Button')]"));
         element.click();
-        WebElement radioButton = driver.findElement(By.xpath("//input[@id='yesRadio']"));
+        WebElement radioButton = driver.findElement(By.xpath("//label[@class='custom-control-label']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", radioButton);
         radioButton.click();
-        String expectedText = "You have selected ";
+        String expectedText = "Yes";
         WebElement resultText = driver.findElement(By.xpath("//span[@class='text-success']"));
         Assertions.assertEquals(expectedText, resultText.getText());
     }
@@ -93,6 +93,8 @@ class TestDemoQA {
         WebElement selectGender = driver.findElement(By.xpath("//input[@id='gender-radio-2']"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", selectGender);
+        WebElement phoneNumber = driver.findElement(By.xpath("//input[@id='userNumber']"));
+        phoneNumber.sendKeys("1234567890");
         WebElement buttonSubmit = driver.findElement(By.xpath("//button[@id='submit']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", buttonSubmit);
         buttonSubmit.click();
